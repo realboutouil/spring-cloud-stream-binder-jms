@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    stream:
+      function.definition: sender;consumer;dlqConsumer
+      binder.jms.type: jms
+      bindings:
+        sender-out-0:
+          destination: topic://dlt-ticks
+        consumer-in-0:
+          destination: topic://dlt-ticks
+          consumer:
+            maxAttempts: 1 #sending directly to DLQ
+        dlqConsumer-in-0:
+          destination: topic://dlt-ticks.dlq
+      #Custom JMS consumer properties
+      jms:
+        default:
+          consumer:
+            shared: false
+            durable: false

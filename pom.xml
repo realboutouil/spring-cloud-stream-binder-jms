@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-parent</artifactId>
+        <version>2021.0.3</version>
+        <relativePath/>
+    </parent>
+    <artifactId>spring-cloud-stream-binder-jms</artifactId>
+    <groupId>com.boutouil</groupId>
+    <version>${revision}${changelist}</version>
+    <description>A Spring Boot Cloud Stream binder using JMS</description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <url>https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms</url>
+    <developers>
+        <developer>
+            <name>Mohammed Amine BOUTOUIL</name>
+            <email>boutouilmohammedamine@gmail.com</email>
+        </developer>
+    </developers>
+    <organization>
+        <name>com.boutouil</name>
+        <url>https://github.com/mohammedamineboutouil</url>
+    </organization>
+    <scm>
+        <url>https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms</url>
+        <connection>scm:git:https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:mohammedamineboutouil/spring-cloud-stream-binder-jms.git
+        </developerConnection>
+    </scm>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms/blob/main/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms/issues</url>
+    </issueManagement>
+
+    <properties>
+        <!-- CI  -->
+        <revision>1.0.0</revision>
+        <changelist>-BUILD</changelist>
+        <!-- Java & Spring -->
+        <java.version>11</java.version>
+        <!--/////////-->
+        <!-- Plugins -->
+        <!--/////////-->
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- pom flatterer needed for CI -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.7</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.process-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Build the test-jars of all dpne modules -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-tests</id>
+                        <goals>
+                            <goal>test-jar</goal>
+                            <goal>help</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Attach source code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Build the javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- GPG sign the artifacts to be deployed to maven central -->
+        <profile>
+            <id>release</id>
+            <properties>
+                <changelist>.RELEASE</changelist>
+                <skipTests>true</skipTests>
+                <deployAtEnd>true</deployAtEnd>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Sign the artifacts using GPG, so they can be deployed to maven central -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Tag the release version in git -->
+                    <!--                    <plugin>-->
+                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
+                    <!--                        <artifactId>maven-scm-plugin</artifactId>-->
+                    <!--                        <executions>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>git-tag</id>-->
+                    <!--                                <phase>deploy</phase>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>tag</goal>-->
+                    <!--                                </goals>-->
+                    <!--                            </execution>-->
+                    <!--                        </executions>-->
+                    <!--                        <configuration>-->
+                    <!--                            <tag>REL_v${project.version}</tag>-->
+                    <!--                        </configuration>-->
+                    <!--                    </plugin>-->
+                </plugins>
+            </build>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub mohammedamineboutouil Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms</url>
+                </repository>
+            </distributionManagement>
+            <!-- To release:
+            mvn clean deploy -Prelease -Dgpg.passphrase=yourpassphrase
+             -->
+        </profile>
+        <profile>
+            <id>github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub mohammedamineboutouil Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/mohammedamineboutouil/spring-cloud-stream-binder-jms</url>
+                </repository>
+            </distributionManagement>
+            <!-- To release:
+            mvn clean deploy -Prelease,github -Dgpg.passphrase=yourpassphrase
+             -->
+        </profile>
+        <profile>
+            <id>maven-central</id>
+            <build>
+                <plugins>
+                    <!-- Staging release:
+                        mvn clean deploy -Prelease
+                        mvn nexus-staging:release -Prelease
+                        mvn nexus-staging:drop -Prelease
+                        https://oss.sonatype.org/#stagingRepositories
+                    -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${nexus-staging-maven-plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <!-- Setting this to true will stage and release at once -->
+                            <!--  Change to true once we're good! -->
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                </repository>
+            </distributionManagement>
+            <!-- To release:
+            mvn clean deploy -Prelease,maven-central -Dgpg.passphrase=yourpassphrase
+             -->
+        </profile>
+    </profiles>
+
+</project>

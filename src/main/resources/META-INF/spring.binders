@@ -1,0 +1,3 @@
+jms:\
+com.boutouil.binder.jms.config.JmsBinderAutoConfiguration,\
+com.boutouil.binder.jms.config.JmsProvisionAutoConfiguration

@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    stream:
+      function.definition: sender;consumer0;consumer1;consumer2
+      binder.jms.type: jms
+      bindings:
+        sender-out-0:
+          destination: topic://ticks
+          producer:
+            partition-key-expression: new Integer(payload)
+            partition-count: 3
+        consumer0-in-0:
+          destination: topic://ticks-0
+          group: consumer-group
+        consumer1-in-0:
+          destination: topic://ticks-1
+          group: consumer-group
+        consumer2-in-0:
+          destination: topic://ticks-2
+          group: consumer-group
+      #Custom JMS consumer properties
+      jms:
+        default:
+          consumer:
+            shared: false
+            durable: false

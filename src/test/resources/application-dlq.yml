@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    stream:
+      function.definition: sender;consumer;dlqConsumer
+      binder.jms.type: jms
+      bindings:
+        sender-out-0:
+          destination: queue://dlt-ticks
+        consumer-in-0:
+          destination: queue://dlt-ticks
+        dlqConsumer-in-0:
+          destination: queue://dlt-ticks.dlq

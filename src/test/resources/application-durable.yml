@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    stream:
+      function.definition: sender;consumer
+      binder.jms.type: jms
+      bindings:
+        sender-out-0:
+          destination: topic://ticks
+        consumer-in-0:
+          destination: topic://ticks
+      jms.bindings:
+        consumer-in-0:
+          consumer:
+            shared: false
