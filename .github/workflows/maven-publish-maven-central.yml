@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
   release:
     types: [ created ]
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
