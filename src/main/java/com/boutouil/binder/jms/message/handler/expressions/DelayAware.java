@@ -24,15 +24,6 @@ public class DelayAware {
         delayExpression = new ValueExpression<>(delay);
     }
 
-    /**
-     * Set the delay SpEL expression that will evaluate the {@code x-delay} header.
-     *
-     * @param delayExpression the SpEL expression for the delay.
-     */
-    public void setDelayExpression(Expression delayExpression) {
-        this.delayExpression = delayExpression;
-    }
-
     public void doInit(BeanFactory beanFactory) {
         if (delayExpression != null) {
             delayGenerator = new ExpressionEvaluatingMessageProcessor<>(delayExpression, Integer.class);
@@ -57,5 +48,14 @@ public class DelayAware {
         if (extension.getDelayExpression() != null) {
             setDelayExpression(extension.getDelayExpression());
         }
+    }
+
+    /**
+     * Set the delay SpEL expression that will evaluate the {@code x-delay} header.
+     *
+     * @param delayExpression the SpEL expression for the delay.
+     */
+    public void setDelayExpression(Expression delayExpression) {
+        this.delayExpression = delayExpression;
     }
 }

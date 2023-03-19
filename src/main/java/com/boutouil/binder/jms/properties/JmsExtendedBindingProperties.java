@@ -13,13 +13,13 @@ public class JmsExtendedBindingProperties extends AbstractExtendedBindingPropert
     public static final String DEFAULTS_PREFIX = "spring.cloud.stream.jms.default";
 
     @Override
-    public String getDefaultsPrefix() {
-        return DEFAULTS_PREFIX;
+    public Map<String, ?> getBindings() {
+        return doGetBindings();
     }
 
     @Override
-    public Map<String, ?> getBindings() {
-        return doGetBindings();
+    public String getDefaultsPrefix() {
+        return DEFAULTS_PREFIX;
     }
 
     @Override

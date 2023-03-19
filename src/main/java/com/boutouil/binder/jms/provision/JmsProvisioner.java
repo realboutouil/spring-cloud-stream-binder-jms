@@ -75,8 +75,11 @@ public class JmsProvisioner implements ProvisioningProvider<
         return new JmsConsumerDestination(provisioned.get(destinationName), provisioned.get(dlqKey));
     }
 
-    protected String noPrefix(String destinationName) {
-        return destinationName.substring(8);
+    /**
+     * Build a name for the destination (queue/topic) based on the partition index.
+     */
+    private String buildName(int partitionIndex, String group) {
+        return String.format("%s-%s", group, partitionIndex);
     }
 
     private Map<String, Destination> provision(List<String> destinationsToProvision) {
@@ -111,10 +114,7 @@ public class JmsProvisioner implements ProvisioningProvider<
         return destinations;
     }
 
-    /**
-     * Build a name for the destination (queue/topic) based on the partition index.
-     */
-    private String buildName(int partitionIndex, String group) {
-        return String.format("%s-%s", group, partitionIndex);
+    protected String noPrefix(String destinationName) {
+        return destinationName.substring(8);
     }
 }

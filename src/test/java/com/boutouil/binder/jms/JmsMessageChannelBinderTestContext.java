@@ -2,9 +2,10 @@ package com.boutouil.binder.jms;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQConnectionFactoryCustomizer;
+import org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -21,14 +22,8 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableAutoConfiguration
 @EnableJms
+@Import({ArtemisAutoConfiguration.class})
 public class JmsMessageChannelBinderTestContext {
-
-    @Bean
-    public ActiveMQConnectionFactoryCustomizer activeMQConnectionFactoryCustomizer() {
-        return factory -> {
-            factory.setClientID("clientId");
-        };
-    }
 
     @Bean
     public Sinks.Many<Message<String>> senderSink() {

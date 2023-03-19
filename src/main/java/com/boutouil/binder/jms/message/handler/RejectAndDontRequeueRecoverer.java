@@ -53,17 +53,17 @@ public class RejectAndDontRequeueRecoverer implements MessageHandler {
             this(message, false, null);
         }
 
+        public JmsRejectAndDontRequeueException(@Nullable String message, boolean rejectManual, @Nullable Throwable cause) {
+            super(message, cause);
+            this.rejectManual = rejectManual;
+        }
+
         public JmsRejectAndDontRequeueException(Throwable cause) {
             this(null, false, cause);
         }
 
         public JmsRejectAndDontRequeueException(String message, Throwable cause) {
             this(message, false, cause);
-        }
-
-        public JmsRejectAndDontRequeueException(@Nullable String message, boolean rejectManual, @Nullable Throwable cause) {
-            super(message, cause);
-            this.rejectManual = rejectManual;
         }
 
         public boolean isRejectManual() {

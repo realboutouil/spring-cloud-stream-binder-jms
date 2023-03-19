@@ -46,16 +46,8 @@ Beans:
 
 @SpringBootApplication
 @EnableJms
+@Import({ArtemisAutoConfiguration.class})
 public class JmsBinderPartitionedTestContext {
-
-    @Bean
-    public ActiveMQConnectionFactoryCustomizer activeMQConnectionFactoryCustomizer(
-            Environment environment
-    ) {
-        return factory -> {
-            factory.setClientID(String.join("-", environment.getActiveProfiles()));
-        };
-    }
 
     @Bean
     public Supplier<Flux<Message<String>>> sender() {
@@ -112,15 +104,11 @@ Beans:
 @EnableJms
 public class JmsBinderPartitionedTestContext {
 
-    //An example with ActiveMQ
-    //We are configuring the connection factory
+    // An example with ActiveMQ
+    // We are configuring the connection factory
     @Bean
-    public ActiveMQConnectionFactoryCustomizer activeMQConnectionFactoryCustomizer(
-            Environment environment
-    ) {
-        return factory -> {
-            factory.setClientID(String.join("-", environment.getActiveProfiles()));
-        };
+    public ActiveMQConnectionFactoryCustomizer activeMQConnectionFactoryCustomizer(Environment environment) {
+        return factory -> factory.setClientID(String.join("-", environment.getActiveProfiles()));
     }
 
     @Bean

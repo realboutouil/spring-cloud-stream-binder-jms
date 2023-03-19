@@ -28,17 +28,17 @@ public class JmsProducerDestination implements ProducerDestination {
         return destinationName;
     }
 
-    public Destination getDestination(Integer partition) {
-        return Optional.ofNullable(partition)
-                .map(partitions::get)
-                .orElseGet(() -> Optional.ofNullable(partitions.get(-1))
-                        .orElseThrow());
-    }
-
     @Override
     public String getNameForPartition(int partition) {
         return Optional.ofNullable(partitions.get(partition))
                 .map(Commons::destinationName)
                 .orElse(destinationName);
+    }
+
+    public Destination getDestination(Integer partition) {
+        return Optional.ofNullable(partition)
+                .map(partitions::get)
+                .orElseGet(() -> Optional.ofNullable(partitions.get(-1))
+                        .orElseThrow());
     }
 }

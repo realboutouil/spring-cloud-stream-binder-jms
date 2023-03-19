@@ -71,15 +71,6 @@ public class JmsMessageChannelBinder extends AbstractMessageChannelBinder<
     }
 
     @Override
-    protected MessageHandler createProducerMessageHandler(
-            ProducerDestination destination,
-            ExtendedProducerProperties<JmsProducerProperties> producerProperties,
-            MessageChannel errorChannel) {
-        return jmsMessageHandlerFactory
-                .jmsOutbound((JmsProducerDestination) destination, producerProperties);
-    }
-
-    @Override
     protected void postProcessOutputChannel(
             MessageChannel outputChannel,
             ExtendedProducerProperties<JmsProducerProperties> producerProperties) {
@@ -88,6 +79,15 @@ public class JmsMessageChannelBinder extends AbstractMessageChannelBinder<
                     .addInterceptor(0,
                             new PartitioningInterceptor(producerProperties, getBeanFactory()));
         }
+    }
+
+    @Override
+    protected MessageHandler createProducerMessageHandler(
+            ProducerDestination destination,
+            ExtendedProducerProperties<JmsProducerProperties> producerProperties,
+            MessageChannel errorChannel) {
+        return jmsMessageHandlerFactory
+                .jmsOutbound((JmsProducerDestination) destination, producerProperties);
     }
 
     @Override
@@ -123,11 +123,6 @@ public class JmsMessageChannelBinder extends AbstractMessageChannelBinder<
     }
 
     @Override
-    protected ErrorMessageStrategy getErrorMessageStrategy() {
-        return new DefaultErrorMessageStrategy();
-    }
-
-    @Override
     protected MessageHandler getErrorMessageHandler(ConsumerDestination destination,
                                                     String group,
                                                     final ExtendedConsumerProperties<JmsConsumerProperties> properties) {
@@ -140,6 +135,11 @@ public class JmsMessageChannelBinder extends AbstractMessageChannelBinder<
         } else {
             return super.getErrorMessageHandler(destination, group, properties);
         }
+    }
+
+    @Override
+    protected ErrorMessageStrategy getErrorMessageStrategy() {
+        return new DefaultErrorMessageStrategy();
     }
 
 //    @Override

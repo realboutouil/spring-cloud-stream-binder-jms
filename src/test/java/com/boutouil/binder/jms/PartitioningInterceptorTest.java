@@ -26,6 +26,14 @@ class PartitioningInterceptorTest {
                 .containsEntry(BinderHeaders.PARTITION_HEADER, 5);
     }
 
+    private PartitioningInterceptor createPartitioningInterceptor() {
+        JmsProducerProperties properties = new JmsProducerProperties();
+        ExtendedProducerProperties<JmsProducerProperties> pp = new ExtendedProducerProperties<>(properties);
+        pp.setPartitionCount(10);
+        pp.setPartitionKeyExpression(new SpelExpressionParser().parseExpression("payload"));
+        return new PartitioningInterceptor(pp, mock(ConfigurableListableBeanFactory.class));
+    }
+
     @Test
     void testResolvePartitionOverride() {
         PartitioningInterceptor partitioningInterceptor = createPartitioningInterceptor();
@@ -37,13 +45,5 @@ class PartitioningInterceptorTest {
 
         assertThat(out.getHeaders())
                 .containsEntry(BinderHeaders.PARTITION_HEADER, 3);
-    }
-
-    private PartitioningInterceptor createPartitioningInterceptor() {
-        JmsProducerProperties properties = new JmsProducerProperties();
-        ExtendedProducerProperties<JmsProducerProperties> pp = new ExtendedProducerProperties<>(properties);
-        pp.setPartitionCount(10);
-        pp.setPartitionKeyExpression(new SpelExpressionParser().parseExpression("payload"));
-        return new PartitioningInterceptor(pp, mock(ConfigurableListableBeanFactory.class));
     }
 }

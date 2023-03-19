@@ -39,15 +39,15 @@ public class JmsOutbound extends AbstractReplyProducingMessageHandler {
     }
 
     @Override
-    protected void doInit() {
-        BeanFactory beanFactory = getBeanFactory();
-        delayAware.doInit(beanFactory);
-    }
-
-    @Override
     public IntegrationPatternType getIntegrationPatternType() {
         return expectReply ? super.getIntegrationPatternType() :
                 IntegrationPatternType.outbound_channel_adapter;
+    }
+
+    @Override
+    protected void doInit() {
+        BeanFactory beanFactory = getBeanFactory();
+        delayAware.doInit(beanFactory);
     }
 
     @Override
@@ -60,17 +60,6 @@ public class JmsOutbound extends AbstractReplyProducingMessageHandler {
             send(destination, message);
             return null;
         }
-    }
-
-    private void send(Destination destination, Message<?> message) {
-        Object objectToSend = message.getPayload();
-        jmsTemplate.convertAndSend(destination, objectToSend, jmsMessage -> {
-            delayAware.addDelayProperty(message, jmsMessage);
-            jmsHeaderMapper.fromHeaders(message.getHeaders(), jmsMessage);
-            logger.debug(String.format("Sending to destination [%s] JMS message: [%s]",
-                    destination, jmsMessage));
-            return jmsMessage;
-        });
     }
 
     @SneakyThrows
@@ -95,6 +84,17 @@ public class JmsOutbound extends AbstractReplyProducingMessageHandler {
         AbstractIntegrationMessageBuilder<?> builder = prepareMessageBuilder(replyObject);
         builder.copyHeaders(headers);
         return builder;
+    }
+
+    private void send(Destination destination, Message<?> message) {
+        Object objectToSend = message.getPayload();
+        jmsTemplate.convertAndSend(destination, objectToSend, jmsMessage -> {
+            delayAware.addDelayProperty(message, jmsMessage);
+            jmsHeaderMapper.fromHeaders(message.getHeaders(), jmsMessage);
+            logger.debug(String.format("Sending to destination [%s] JMS message: [%s]",
+                    destination, jmsMessage));
+            return jmsMessage;
+        });
     }
 
     private AbstractIntegrationMessageBuilder<?> prepareMessageBuilder(Object replyObject) {

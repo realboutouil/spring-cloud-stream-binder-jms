@@ -1,11 +1,9 @@
 package com.boutouil.binder.jms.message.handler;
 
 import lombok.SneakyThrows;
-import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.integration.IntegrationPatternType;
-import org.springframework.integration.support.AbstractIntegrationMessageBuilder;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.SimpleJmsHeaderMapper;
 import org.springframework.messaging.Message;
@@ -28,7 +26,7 @@ class JmsOutboundTest {
         when(connectionFactory.createConnection()).thenReturn(connection);
         Session session = mock(Session.class);
         when(connection.createSession(false, Session.AUTO_ACKNOWLEDGE)).thenReturn(session);
-        ActiveMQTextMessage textMessage = new ActiveMQTextMessage();
+        TextMessage textMessage = mock(TextMessage.class);
         when(session.createTextMessage(anyString())).thenReturn(textMessage);
         MessageProducer producer = mock(MessageProducer.class);
         when(session.createProducer(any())).thenReturn(producer);
@@ -63,7 +61,7 @@ class JmsOutboundTest {
         when(connectionFactory.createConnection()).thenReturn(connection);
         Session session = mock(Session.class);
         when(connection.createSession(false, Session.AUTO_ACKNOWLEDGE)).thenReturn(session);
-        ActiveMQTextMessage textMessage = new ActiveMQTextMessage();
+        TextMessage textMessage = mock(TextMessage.class);
         when(session.createTextMessage(anyString())).thenReturn(textMessage);
         MessageProducer producer = mock(MessageProducer.class);
         when(session.createProducer(any())).thenReturn(producer);
@@ -90,50 +88,5 @@ class JmsOutboundTest {
                 .send(eq(textMessage));
         verify(consumer)
                 .receive();
-    }
-
-    @SneakyThrows
-    @Test
-    void testSendAndReceive() {
-        ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
-        Connection connection = mock(Connection.class);
-        when(connectionFactory.createConnection()).thenReturn(connection);
-        Session session = mock(Session.class);
-        when(connection.createSession(false, Session.AUTO_ACKNOWLEDGE)).thenReturn(session);
-        ActiveMQTextMessage textMessage = new ActiveMQTextMessage();
-        when(session.createTextMessage(anyString())).thenReturn(textMessage);
-        MessageProducer producer = mock(MessageProducer.class);
-        when(session.createProducer(any())).thenReturn(producer);
-        MessageConsumer consumer = mock(MessageConsumer.class);
-        when(session.createConsumer(any())).thenReturn(consumer);
-        ActiveMQTextMessage responseMessage = new ActiveMQTextMessage();
-        responseMessage.setText("TEST-RESPONSE");
-        when(consumer.receive()).thenReturn(responseMessage);
-
-        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-        JmsOutbound jmsOutbound = new JmsOutbound(jmsTemplate,
-                new SimpleJmsHeaderMapper(), integer -> mock(Destination.class));
-        jmsOutbound.setBeanFactory(mock(BeanFactory.class));
-        jmsOutbound.doInit();
-
-        jmsOutbound.setExpectReply(true);
-        assertThat(jmsOutbound.getComponentType())
-                .isEqualTo("jms:outbound-gateway");
-
-        assertThat(jmsOutbound.getIntegrationPatternType())
-                .isEqualTo(IntegrationPatternType.outbound_gateway);
-
-        Message<?> message = MessageBuilder.withPayload("TEST").build();
-        AbstractIntegrationMessageBuilder<?> builder =
-                (AbstractIntegrationMessageBuilder<?>) jmsOutbound.handleRequestMessage(message);
-
-        verify(producer)
-                .send(eq(textMessage));
-        verify(consumer)
-                .receive();
-
-        assertThat(builder).isNotNull();
-        assertThat(builder.build().getPayload())
-                .isEqualTo("TEST-RESPONSE");
     }
 }

@@ -1,6 +1,7 @@
 package com.boutouil.binder.jms;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,8 @@ public class JmsBinderErrorTest {
                 .expectNextMatches(headers -> {
                     assertThat(headers)
                             .containsEntry("x_exception_message", "SENDING TO DLQ THIS EXCEPTION")
-                            .containsEntry("x_original_destination", "queue://dlt-ticks");
+                            .containsEntry("x_original_destination", ActiveMQQueue.createQueue("dlt-ticks")
+                                    .toString());
                     return true;
                 })
                 .thenCancel()

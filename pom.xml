@@ -45,10 +45,11 @@
 
     <properties>
         <!-- CI  -->
-        <revision>1.0.0</revision>
-        <changelist>-BUILD</changelist>
+        <revision>2.0.0</revision>
+        <changelist>-RELEASE</changelist>
         <!-- Java & Spring -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
+        <apache-artemis.version>2.28.0</apache-artemis.version>
         <!--/////////-->
         <!-- Plugins -->
         <!--/////////-->
@@ -101,15 +102,27 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-activemq</artifactId>
+            <artifactId>spring-boot-starter-artemis</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-broker</artifactId>
+            <artifactId>artemis-jms-server</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>apache-artemis</artifactId>
+                <version>${apache-artemis.version}</version>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -212,23 +225,23 @@
                             </execution>
                         </executions>
                     </plugin>
-<!-- Tag the release version in git -->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-scm-plugin</artifactId>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>git-tag</id>-->
-<!--                                <phase>deploy</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>tag</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                        <configuration>-->
-<!--                            <tag>REL_v${project.version}</tag>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
+                    <!-- Tag the release version in git -->
+                    <!--                    <plugin>-->
+                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
+                    <!--                        <artifactId>maven-scm-plugin</artifactId>-->
+                    <!--                        <executions>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>git-tag</id>-->
+                    <!--                                <phase>deploy</phase>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>tag</goal>-->
+                    <!--                                </goals>-->
+                    <!--                            </execution>-->
+                    <!--                        </executions>-->
+                    <!--                        <configuration>-->
+                    <!--                            <tag>REL_v${project.version}</tag>-->
+                    <!--                        </configuration>-->
+                    <!--                    </plugin>-->
                 </plugins>
             </build>
             <distributionManagement>

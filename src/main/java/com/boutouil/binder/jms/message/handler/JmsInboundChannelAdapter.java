@@ -109,6 +109,16 @@ public class JmsInboundChannelAdapter extends MessageProducerSupport implements 
     }
 
     @Override
+    protected AttributeAccessor getErrorMessageAttributes(org.springframework.messaging.Message<?> message) {
+        AttributeAccessor attributes = ATTRIBUTES_HOLDER.get();
+        if (attributes == null) {
+            return super.getErrorMessageAttributes(message);
+        } else {
+            return attributes;
+        }
+    }
+
+    @Override
     public int beforeShutdown() {
         stop();
         return 0;
@@ -133,16 +143,6 @@ public class JmsInboundChannelAdapter extends MessageProducerSupport implements 
                 attributes.setAttribute(ErrorMessageUtils.INPUT_MESSAGE_CONTEXT_KEY, message);
                 attributes.setAttribute(JmsHeaders.PREFIX + "raw_message", jmsMessage);
             }
-        }
-    }
-
-    @Override
-    protected AttributeAccessor getErrorMessageAttributes(org.springframework.messaging.Message<?> message) {
-        AttributeAccessor attributes = ATTRIBUTES_HOLDER.get();
-        if (attributes == null) {
-            return super.getErrorMessageAttributes(message);
-        } else {
-            return attributes;
         }
     }
 
