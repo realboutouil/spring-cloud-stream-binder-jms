@@ -23,7 +23,7 @@ class DelayAwareTest {
         delayAware.doInit(null);
 
         Message<String> message = MessageBuilder.withPayload("TEST").build();
-        javax.jms.Message jmsMessage = mock(javax.jms.Message.class);
+        jakarta.jms.Message jmsMessage = mock(jakarta.jms.Message.class);
         delayAware.addDelayProperty(message, jmsMessage);
         verify(jmsMessage).setIntProperty(X_DELAY, 5);
     }
@@ -40,7 +40,7 @@ class DelayAwareTest {
         delayAware.doInit(null);
 
         Message<String> message = MessageBuilder.withPayload("TEST").build();
-        javax.jms.Message jmsMessage = mock(javax.jms.Message.class);
+        jakarta.jms.Message jmsMessage = mock(jakarta.jms.Message.class);
         delayAware.addDelayProperty(message, jmsMessage);
         verify(jmsMessage, never()).setIntProperty(eq(X_DELAY), anyInt());
     }
@@ -56,7 +56,7 @@ class DelayAwareTest {
         delayAware.doInit(null);
 
         Message<String> message = MessageBuilder.withPayload("TEST").build();
-        javax.jms.Message jmsMessage = mock(javax.jms.Message.class);
+        jakarta.jms.Message jmsMessage = mock(jakarta.jms.Message.class);
         delayAware.addDelayProperty(message, jmsMessage);
         verify(jmsMessage, never()).setIntProperty(eq(X_DELAY), anyInt());
     }
@@ -75,7 +75,7 @@ class DelayAwareTest {
         delayAware.doInit(mock(BeanFactory.class));
 
         Message<String> message = MessageBuilder.withPayload("5").build();
-        javax.jms.Message jmsMessage = mock(javax.jms.Message.class);
+        jakarta.jms.Message jmsMessage = mock(jakarta.jms.Message.class);
         delayAware.addDelayProperty(message, jmsMessage);
         verify(jmsMessage).setIntProperty(X_DELAY, 5);
     }

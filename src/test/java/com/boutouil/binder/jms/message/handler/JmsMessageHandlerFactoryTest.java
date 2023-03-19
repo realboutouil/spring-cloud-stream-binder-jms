@@ -9,8 +9,8 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import javax.jms.ConnectionFactory;
-import javax.jms.Queue;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.Queue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

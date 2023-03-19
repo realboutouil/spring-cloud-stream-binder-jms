@@ -24,9 +24,9 @@ import org.springframework.retry.support.RetrySynchronizationManager;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.util.Assert;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.MessageListener;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;

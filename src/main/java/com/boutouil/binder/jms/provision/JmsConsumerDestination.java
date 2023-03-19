@@ -4,8 +4,8 @@ import lombok.Data;
 import org.springframework.cloud.stream.provisioning.ConsumerDestination;
 import org.springframework.lang.Nullable;
 
-import javax.jms.Destination;
-import javax.jms.Topic;
+import jakarta.jms.Destination;
+import jakarta.jms.Topic;
 
 import static com.boutouil.binder.jms.provision.Commons.destinationName;
 

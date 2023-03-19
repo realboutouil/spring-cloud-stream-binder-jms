@@ -34,7 +34,7 @@ public class DelayAware {
     }
 
     @SneakyThrows
-    public void addDelayProperty(Message<?> message, javax.jms.Message jmsMessage) {
+    public void addDelayProperty(Message<?> message, jakarta.jms.Message jmsMessage) {
         if (delayGenerator != null) {
             Integer delay = delayGenerator.processMessage(message);
             if (delay != null && delay >= 0) {

@@ -4,9 +4,9 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.stream.provisioning.ProvisioningException;
 
-import javax.jms.Destination;
-import javax.jms.Queue;
-import javax.jms.Topic;
+import jakarta.jms.Destination;
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 
 import static com.boutouil.binder.jms.provision.Commons.destinationName;
 import static org.assertj.core.api.Assertions.assertThat;

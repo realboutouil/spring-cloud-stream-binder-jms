@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.cloud.stream.provisioning.ProvisioningException;
 import org.springframework.jms.support.JmsUtils;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Queue;
-import javax.jms.Topic;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Commons {

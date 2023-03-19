@@ -12,8 +12,8 @@ import org.springframework.cloud.stream.provisioning.ProvisioningException;
 import org.springframework.cloud.stream.provisioning.ProvisioningProvider;
 import org.springframework.jms.support.JmsUtils;
 
-import javax.jms.Queue;
-import javax.jms.*;
+import jakarta.jms.Queue;
+import jakarta.jms.*;
 import java.util.*;
 import java.util.stream.Collectors;
 

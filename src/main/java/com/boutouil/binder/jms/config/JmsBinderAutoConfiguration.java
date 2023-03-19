@@ -26,7 +26,7 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.SimpleMessageConverter;
 import org.springframework.lang.Nullable;
 
-import javax.jms.ConnectionFactory;
+import jakarta.jms.ConnectionFactory;
 import java.util.Optional;
 
 @Configuration

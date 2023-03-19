@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.cloud.stream.provisioning.ProducerDestination;
 
-import javax.jms.Destination;
+import jakarta.jms.Destination;
 import java.util.Map;
 import java.util.Optional;
 

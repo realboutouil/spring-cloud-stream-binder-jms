@@ -3,7 +3,7 @@ package com.boutouil.binder.jms.provision;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import javax.jms.Queue;
+import jakarta.jms.Queue;
 import java.util.Map;
 import java.util.NoSuchElementException;
 

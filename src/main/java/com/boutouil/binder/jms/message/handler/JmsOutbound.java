@@ -15,7 +15,7 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 
-import javax.jms.Destination;
+import jakarta.jms.Destination;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -66,8 +66,8 @@ public class JmsOutbound extends AbstractReplyProducingMessageHandler {
     private AbstractIntegrationMessageBuilder<?> sendAndReceive(Destination destination, Message<?> message) {
         Object objectToSend = message.getPayload();
         MessageConverter messageConverter = Objects.requireNonNull(jmsTemplate.getMessageConverter());
-        javax.jms.Message receivedMessage = jmsTemplate.sendAndReceive(destination, session -> {
-            javax.jms.Message jmsMessage = messageConverter.toMessage(objectToSend, session);
+        jakarta.jms.Message receivedMessage = jmsTemplate.sendAndReceive(destination, session -> {
+            jakarta.jms.Message jmsMessage = messageConverter.toMessage(objectToSend, session);
             jmsHeaderMapper.fromHeaders(message.getHeaders(), jmsMessage);
             delayAware.addDelayProperty(message, jmsMessage);
             logger.debug(String.format("Sending and waiting to destination [%s] JMS message: [%s]",

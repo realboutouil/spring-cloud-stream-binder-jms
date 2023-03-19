@@ -17,7 +17,7 @@ import org.springframework.jms.support.JmsHeaderMapper;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.messaging.MessageHandler;
 
-import javax.jms.Destination;
+import jakarta.jms.Destination;
 import java.util.Objects;
 
 @Slf4j

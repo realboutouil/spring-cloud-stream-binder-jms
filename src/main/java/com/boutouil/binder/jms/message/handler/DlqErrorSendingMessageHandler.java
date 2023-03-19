@@ -9,7 +9,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.ErrorMessage;
 
-import javax.jms.Destination;
+import jakarta.jms.Destination;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;

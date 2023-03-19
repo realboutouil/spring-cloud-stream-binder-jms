@@ -9,7 +9,7 @@ import org.springframework.jms.support.SimpleJmsHeaderMapper;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
-import javax.jms.*;
+import jakarta.jms.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
