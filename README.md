@@ -1,18 +1,46 @@
 # spring-cloud-stream-binder-jms
 
-A binder for spring cloud stream using JMS
+A custom binder for Spring Cloud Stream with JMS support for JMS programs works with ActiveMQ and IBM MQ brokers.
+
+Credit: [spring-cloud-stream-binder-jms](https://github.com/gevoulga/spring-cloud-stream-binder-jms)
 
 ## Introduction
 
-Binder using jakarta.jms-api 2.0.1 for the underlying binding of streams.  
-Simply add your dependency of the underlying implementation of JMS (using a spring-boot-stater?), and that's it!
+This binder uses jakarta.jms-api 3.1.0 for the underlying binding of streams. To get started, simply add your dependency
+for the underlying JMS implementation (e.g., using a Spring Boot starter), and you're good to go!
 
 ## Features
 
-- Topics & Queues supported
-- Partitioning
-- Delay
-- Dead-Letter-Queues: by default enabled -> <topicName>.dlq
+- Supports Topics & Queues
+- Partitioning support
+- Message delay support
+- Dead-Letter-Queues: enabled by default with naming convention `<topicName>.dlq`
+
+## Supported Versions
+
+| Version       | Compatibility          |
+|---------------|------------------------|
+| 3.0.0.RELEASE | Works with 3.0.x       |
+| 2.0.0.RELEASE | Works with 2.7.x/2.6.x |
+
+## Dependencies
+
+### Gradle
+
+```groovy
+implementation 'com.boutouil:spring-cloud-stream-binder-jms:3.0.0.RELEASE'
+```
+
+### Maven
+
+```xml
+
+<dependency>
+    <groupId>com.boutouil</groupId>
+    <artifactId>spring-cloud-stream-binder-jms</artifactId>
+    <version>3.0.0.RELEASE</version>
+</dependency>
+```
 
 ## Examples
 
@@ -127,3 +155,19 @@ public class JmsBinderPartitionedTestContext {
     }
 }
 ```
+
+## IBM MQ Example
+
+For a sample project demonstrating the use of this Spring Cloud Stream binder with IBM MQ, please visit the following
+repository:
+
+[Spring Cloud Stream Binder MQ JMS Example](https://github.com/mohammedamineboutouil/spring-cloud-stream-binder-mq-jms)
+
+## License
+
+This project is licensed under the terms of the [LICENSE](LICENSE). Please refer to the LICENSE file in this repository
+for more information.
+
+## Contact Information
+
+For any inquiries or support, please visit [www.boutouil.com/contact/](http://www.boutouil.com/contact/).
