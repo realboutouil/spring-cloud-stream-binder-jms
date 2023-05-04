@@ -170,4 +170,4 @@ for more information.
 
 ## Contact Information
 
-For any inquiries or support, please visit [www.boutouil.com/contact/](http://www.boutouil.com/contact/).
+For any inquiries or support, please visit [boutouil.com/contact](https://www.boutouil.com/contact/).
